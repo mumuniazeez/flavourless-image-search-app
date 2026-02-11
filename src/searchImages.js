@@ -2,10 +2,31 @@ import { renderImages } from "./renderImageHtml";
 const ACCESS_TOKEN = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 const API_URL_FOR_SEARCH = `https://api.unsplash.com/search/photos?client_id=${ACCESS_TOKEN}`;
 
+let searchPage = 1;
+
 const searchImages = async (query) => {
-  const response = await fetch(`${API_URL_FOR_SEARCH}&query=${query}`);
+  const response = await fetch(
+    `${API_URL_FOR_SEARCH}&query=${query}&page=${searchPage}&per_page=10`,
+  );
   const data = await response.json();
   return data;
+};
+
+const registerLoaderMoreEvent = (query, imagesContainer) => {
+  const loadMoreBtn = document.getElementById("loadMoreBtn");
+
+  loadMoreBtn.addEventListener("click", async () => {
+    searchPage++;
+    loadMoreBtn.innerText = "Loading";
+    loadMoreBtn.disabled = true;
+    const searchResult = await searchImages(query);
+    console.log(searchResult);
+    loadMoreBtn.remove();
+    imagesContainer.innerHTML += `${renderImages(searchResult.results)}
+   ${searchResult.results.total_pages > searchPage && `<button id="loadMoreBtn">Load More</button>`}
+    `;
+    registerLoaderMoreEvent(query, imagesContainer);
+  });
 };
 
 export const registerSearchEvent = async (
@@ -16,9 +37,16 @@ export const registerSearchEvent = async (
   searchBtn.addEventListener("click", async () => {
     const query = searchInput.value;
     if (!query) return alert("Type in something to search for");
-    imagesContainer.innerHTML = `<p>Searching for ${query}...</p>`;
+
+    imagesContainer.innerHTML = `<p>Searching for "${query}"...</p>`;
     const searchResult = await searchImages(query);
-    console.log(searchResult.results);
-    imagesContainer.innerHTML = renderImages(searchResult.results);
+    console.log(searchResult);
+    searchPage = 1;
+    imagesContainer.innerHTML = `
+    <h3>Results for "${query}"</h3>
+    ${renderImages(searchResult.results)}
+   ${searchResult.results.total_pages > searchPage && `<button id="loadMoreBtn">Load More</button>`}
+    `;
+    registerLoaderMoreEvent(query, imagesContainer);
   });
 };
