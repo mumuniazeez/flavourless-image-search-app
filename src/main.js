@@ -1,5 +1,6 @@
 import flavourlessImg from "../asset/flavourless-image.png";
 import { loadRandomImages } from "./imageLoader";
+import { registerSearchEvent } from "./searchImages";
 
 document.querySelector("#app").innerHTML = `
   <main>
@@ -36,3 +37,9 @@ document.querySelector("#app").innerHTML = `
 `;
 
 loadRandomImages(document.getElementById("images-container"));
+
+registerSearchEvent(
+  document.getElementById("search-input"),
+  document.getElementById("search-btn"),
+  document.getElementById("images-container"),
+);
