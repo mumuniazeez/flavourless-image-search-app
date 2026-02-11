@@ -8,11 +8,12 @@ export const renderImages = (images) => {
             width="300">
             <div class="image-info">
                 <p>${image.alt_description}</p>
-                <p>${image.user.name}</p>
-                <button>Download</button>
+                <p>Image by <strong>${image.user.name}</strong></p>
+                <button class="download-btn">Download</button>
             </div>
-            <br />
-            `;
+        </div>
+        <br />
+    `;
   });
   return html;
 };

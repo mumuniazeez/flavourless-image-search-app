@@ -1,4 +1,5 @@
 import { renderImages } from "./renderImageHtml";
+import { registerDownload } from "./imageDownloader";
 const ACCESS_TOKEN = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 const API_URL_FOR_RANDOM = `https://api.unsplash.com/photos/random?count=10&client_id=${ACCESS_TOKEN}`;
 
@@ -15,6 +16,9 @@ const registerLoaderMoreEvent = (imagesContainer) => {
     imagesContainer.innerHTML += `${renderImages(data)}
     <button id="loadMoreBtn">Load More</button>`;
     registerLoaderMoreEvent(imagesContainer);
+    data.forEach((image) => {
+      registerDownload(image.urls.raw);
+    });
   });
 };
 
@@ -25,4 +29,7 @@ export const loadRandomImages = async (element) => {
   element.innerHTML = `${renderImages(data)}
   <button id="loadMoreBtn">Load More</button>`;
   registerLoaderMoreEvent(element);
+  data.forEach((image) => {
+    registerDownload(image.links.raw);
+  });
 };

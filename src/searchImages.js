@@ -1,4 +1,5 @@
 import { renderImages } from "./renderImageHtml";
+import { registerDownload } from "./imageDownloader";
 const ACCESS_TOKEN = import.meta.env.VITE_UNSPLASH_ACCESS_KEY;
 const API_URL_FOR_SEARCH = `https://api.unsplash.com/search/photos?client_id=${ACCESS_TOKEN}`;
 
@@ -26,6 +27,9 @@ const registerLoaderMoreEvent = (query, imagesContainer) => {
    ${searchResult.results.total_pages > searchPage && `<button id="loadMoreBtn">Load More</button>`}
     `;
     registerLoaderMoreEvent(query, imagesContainer);
+    searchResult.results.forEach((image) => {
+      registerDownload(image.urls.raw);
+    });
   });
 };
 
@@ -48,5 +52,8 @@ export const registerSearchEvent = async (
    ${searchResult.results.total_pages > searchPage && `<button id="loadMoreBtn">Load More</button>`}
     `;
     registerLoaderMoreEvent(query, imagesContainer);
+    searchResult.results.forEach((image) => {
+      registerDownload(image.urls.raw);
+    });
   });
 };
