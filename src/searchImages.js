@@ -24,7 +24,7 @@ const registerLoaderMoreEvent = (query, imagesContainer) => {
     console.log(searchResult);
     loadMoreBtn.remove();
     imagesContainer.innerHTML += `${renderImages(searchResult.results)}
-   ${searchResult.results.total_pages > searchPage && `<button id="loadMoreBtn">Load More</button>`}
+   ${searchResult.results.total_pages > searchPage ? `<button id="loadMoreBtn">Load More</button>` : 'Ahh, there's not else to load. The end....'}
     `;
     registerLoaderMoreEvent(query, imagesContainer);
     searchResult.results.forEach((image) => {
@@ -49,7 +49,7 @@ export const registerSearchEvent = async (
     imagesContainer.innerHTML = `
     <h3>Results for "${query}"</h3>
     ${renderImages(searchResult.results)}
-   ${searchResult.results.total_pages > searchPage && `<button id="loadMoreBtn">Load More</button>`}
+   ${searchResult.results.total_pages > searchPage ? `<button id="loadMoreBtn">Load More</button>` : 'Ahh, there's not else to load. The end....'}
     `;
     registerLoaderMoreEvent(query, imagesContainer);
     searchResult.results.forEach((image) => {
