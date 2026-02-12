@@ -66,6 +66,6 @@ The challenge: Build a functional application using **only raw HTML and JavaScri
 
 ## 🤝 Contributing
 
-Contributions are welcome! If you want to see the journey of building this or want to contribute, join the channel **#flavourless-image-search-app** on the Hack Club Slack.
+Contributions are welcome! If you want to see the journey of building this or want to contribute, join the channel **#azcodes-projects** on the Hack Club Slack.
 
 Built with ❤️ by **AzCodes**.
